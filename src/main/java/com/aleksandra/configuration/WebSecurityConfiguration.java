@@ -31,14 +31,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.formLogin()
 				.loginPage("/login")
+				.defaultSuccessUrl("/welcome", true)
 				.permitAll()
 				.and()
 			.logout()
 				.permitAll();
 	}
 	
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 }
