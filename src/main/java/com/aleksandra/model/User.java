@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -64,6 +66,7 @@ public class User {
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
+	@JsonIgnore
 	private Set<Role> roles;
 
 	public User() {
