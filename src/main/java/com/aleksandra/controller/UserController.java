@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,11 +40,10 @@ public class UserController {
 	
 	@PostMapping("/users")
 	@ResponseBody
-	public void saveUser(@RequestBody User user){
-		if (user == null) {
-			return;
+	public void saveUser(@RequestBody @Validated User user, BindingResult bindingResult){
+		if (!bindingResult.hasErrors()) {
+			userService.save(user);
 		} 
-		userService.save(user);
 	}
 	
 	@GetMapping("/registration")
