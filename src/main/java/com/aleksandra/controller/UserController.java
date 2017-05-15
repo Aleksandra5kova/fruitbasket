@@ -1,6 +1,7 @@
 package com.aleksandra.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aleksandra.model.User;
 import com.aleksandra.service.SecurityService;
 import com.aleksandra.service.UserService;
+import com.aleksandra.validator.ErrorResource;
+import com.aleksandra.validator.ErrorResponse;
 import com.aleksandra.validator.UserValidator;
 
 @Controller
@@ -31,21 +34,23 @@ public class UserController {
 
 	@Autowired
 	private UserValidator userValidator;
-	
+
 	@GetMapping("/users")
 	@ResponseBody
-	public List<User> getUsers(){
+	public List<User> getUsers() {
 		return userService.getUsers();
 	}
-	
+
 	@PostMapping("/users")
 	@ResponseBody
-	public void saveUser(@RequestBody @Validated User user, BindingResult bindingResult){
+	public List<ErrorResource> saveUser(@RequestBody @Validated User user, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			userService.save(user);
-		} 
+		}
+		ErrorResponse response = new ErrorResponse(bindingResult);
+		return response.getErrors();
 	}
-	
+
 	@GetMapping("/registration")
 	public String registrationForm(Model model) {
 		model.addAttribute("user", new User());
@@ -59,12 +64,12 @@ public class UserController {
 
 		if (bindingResult.hasErrors()) {
 			return "registration";
-		} 
+		}
 
 		userService.save(user);
-		
+
 		securityService.autologin(user.getUsername(), user.getPasswordConfirm());
-		
+
 		return "redirect:/welcome";
 	}
 

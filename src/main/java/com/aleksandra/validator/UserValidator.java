@@ -24,28 +24,28 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "NotEmpty", "NotEmpty");
 
 		if (user.getUsername() != null && user.getPassword() != null && user.getPasswordConfirm() != null
 				&& user.getEmail() != null) {
 
 			if (user.getUsername().length() < 6 && user.getUsername().length() > 32) {
-				errors.rejectValue("username", "Size.userForm.username");
+				errors.rejectValue("username", "SizeUusername", "SizeUusername");
 			}
 
 			if (userService.findByUsername(user.getUsername()) != null) {
-				errors.rejectValue("username", "Duplicate.userForm.username");
+				errors.rejectValue("username", "DuplicateUsername", "DuplicateUsername");
 			}
 
 			if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-				errors.rejectValue("password", "Size.userForm.password");
+				errors.rejectValue("password", "SizePassword", "SizePassword");
 			}
 
 			if (!user.getPasswordConfirm().equals(user.getPassword())) {
-				errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+				errors.rejectValue("passwordConfirm", "DiffPasswordConfirm", "DiffPasswordConfirm");
 			}
 		}
 	}
