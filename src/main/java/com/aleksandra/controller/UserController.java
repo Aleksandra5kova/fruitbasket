@@ -1,7 +1,6 @@
 package com.aleksandra.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import com.aleksandra.model.User;
 import com.aleksandra.service.SecurityService;
 import com.aleksandra.service.UserService;
 import com.aleksandra.validator.ErrorResource;
-import com.aleksandra.validator.ErrorResponse;
 import com.aleksandra.validator.UserValidator;
 
 @Controller
@@ -44,12 +42,33 @@ public class UserController {
 	@PostMapping("/users")
 	@ResponseBody
 	public List<ErrorResource> saveUser(@RequestBody @Validated User user, BindingResult bindingResult) {
-		if (!bindingResult.hasErrors()) {
-			userService.save(user);
+		if (bindingResult.hasErrors()) {
+			return ErrorResource.createErrors(bindingResult);
 		}
-		ErrorResponse response = new ErrorResponse(bindingResult);
-		return response.getErrors();
+		userService.save(user);
+		return null;
 	}
+
+	@PostMapping("/checkUsername")
+	@ResponseBody
+	public boolean checkUsername(@RequestBody String username) {
+		return (userService.findByUsername(username) == null ? false : true);
+	}
+
+	@PostMapping("/checkEmail")
+	@ResponseBody
+	public boolean checkEmail(@RequestBody String email) {
+		return (userService.findByEmail(email) == null ? false : true);
+	}
+
+	@PostMapping("/loginUser")
+	@ResponseBody
+	public void loginUser(@RequestBody User user) {
+		System.out.println(user.getUsername());
+		securityService.autologin(user.getUsername(), user.getPassword());
+	}
+
+	/*************************************************************************************************************/
 
 	@GetMapping("/registration")
 	public String registrationForm(Model model) {

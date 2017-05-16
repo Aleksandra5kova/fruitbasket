@@ -43,4 +43,17 @@ public class UserDaoImpl implements UserDao {
 		return sessionFactory.getCurrentSession().createCriteria(User.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public User findByEmail(String email) {
+		User user = null;
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
+		cr.add(Restrictions.eq("email", email));
+		List<User> users = cr.list();
+		if (users.size() != 0) {
+			user = users.get(0);
+		}
+		return user;
+	}
+
 }
