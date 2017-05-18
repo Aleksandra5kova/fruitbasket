@@ -3,16 +3,15 @@ package com.aleksandra.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.aleksandra.model.User;
 import com.aleksandra.service.SecurityService;
@@ -20,8 +19,7 @@ import com.aleksandra.service.UserService;
 import com.aleksandra.validator.ErrorResource;
 import com.aleksandra.validator.UserValidator;
 
-@Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@RestController
 public class UserController {
 
 	@Autowired
@@ -40,7 +38,6 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	@ResponseBody
 	public List<ErrorResource> saveUser(@RequestBody @Validated User user, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return ErrorResource.createErrors(bindingResult);
@@ -50,27 +47,24 @@ public class UserController {
 	}
 
 	@PostMapping("/checkUsername")
-	@ResponseBody
 	public boolean checkUsername(@RequestBody String username) {
 		return (userService.findByUsername(username) == null ? false : true);
 	}
 
 	@PostMapping("/checkEmail")
-	@ResponseBody
 	public boolean checkEmail(@RequestBody String email) {
 		return (userService.findByEmail(email) == null ? false : true);
 	}
 
-	@PostMapping("/loginUser")
-	@ResponseBody
-	public void loginUser(@RequestBody User user) {
-		System.out.println(user.getUsername());
-		securityService.autologin(user.getUsername(), user.getPassword());
+	@PostMapping("/authenticate")
+	public void loginUser(UsernamePasswordAuthenticationToken token) {
+		System.out.println("here");
+		//securityService.autologin(user.getUsername(), user.getPassword());
 	}
 
 	/*************************************************************************************************************/
 
-	@GetMapping("/registration")
+	/*@GetMapping("/registration")
 	public String registrationForm(Model model) {
 		model.addAttribute("user", new User());
 		return "registration";
@@ -101,5 +95,5 @@ public class UserController {
 	public String welcome() {
 		return "welcome";
 	}
-
+*/
 }

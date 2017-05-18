@@ -3,6 +3,7 @@ package com.aleksandra.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,22 +26,45 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/registration", "/users", "/checkUsername", "/checkEmail", "/loginUser").permitAll()
-				.anyRequest().authenticated()
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/**").permitAll()
+				.antMatchers("/users").permitAll()
+			.anyRequest().authenticated()
+			
+			/*	.antMatchers("/authenticate").permitAll()
+			.anyRequest().authenticated()*/
+			
 				.and()
-			.formLogin()
-				.loginPage("/login")
-				.defaultSuccessUrl("/welcome", true)
+				
+				
+			/*.formLogin().permitAll()
+				.and()*/
+				
+			/*.logout()
 				.permitAll()
-				.and()
-			.logout()
-				.permitAll();
+				.and()*/
+		    .httpBasic().authenticationEntryPoint(getAuthenticationEntryPoint())
+		    	.and()
+		    	
+		    .authorizeRequests()
+		    	.antMatchers("/**").permitAll()
+		    
+		    .anyRequest().fullyAuthenticated()
+		    
+		    	.and()
+		    	
+		    .csrf().disable();
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
+	
+	@Bean
+	 public CustomBasicAuthenticationEntryPoint getAuthenticationEntryPoint() {
+	  return new CustomBasicAuthenticationEntryPoint();
+	 }
+	
 }
