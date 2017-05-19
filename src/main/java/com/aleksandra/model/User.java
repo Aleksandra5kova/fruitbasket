@@ -15,13 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
-public class User{
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +32,6 @@ public class User{
 
 	@Column(name = "user_password")
 	private String password;
-
-	@Transient
-	private String passwordConfirm;
 
 	@Column(name = "user_firstname")
 	private String firstname;
@@ -72,12 +68,11 @@ public class User{
 	public User() {
 	}
 
-	public User(String username, String password, String passwordConfirm, String firstname, String lastname,
-			String genderType, Date dateOfBirth, String address, String email, String phone) {
+	public User(String username, String password, String firstname, String lastname, String genderType,
+			Date dateOfBirth, String address, String email, String phone) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.passwordConfirm = passwordConfirm;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.genderType = genderType;
@@ -109,14 +104,6 @@ public class User{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
 	}
 
 	public String getFirstname() {
@@ -193,10 +180,9 @@ public class User{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", passwordConfirm="
-				+ passwordConfirm + ", firstname=" + firstname + ", lastname=" + lastname + ", genderType=" + genderType
-				+ ", dateOfBirth=" + dateOfBirth + ", address=" + address + ", email=" + email + ", phone=" + phone
-				+ "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", genderType=" + genderType + ", dateOfBirth=" + dateOfBirth
+				+ ", address=" + address + ", email=" + email + ", phone=" + phone + "]";
 	}
 
 }

@@ -19,7 +19,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-    private CustomAuthenticationProvider authProvider;
+    private CustomAuthenticationProvider customAuthenticationProvider;
 	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -31,10 +31,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.antMatchers("/users", "/checkUsername", "/checkEmail").permitAll()
+				.antMatchers("/register", "/checkUsername", "/checkEmail").permitAll()
 			.anyRequest().authenticated()
 				.and()
-			.formLogin().loginPage("/authenticate").permitAll()
+			.formLogin().loginPage("/login").permitAll()
 				.and()
 			.httpBasic().authenticationEntryPoint(getAuthenticationEntryPoint())
 				.and()
@@ -46,13 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		/*DaoAuthenticationProvider dap = new DaoAuthenticationProvider();
-		dap.setUserDetailsService(userDetailsService);
-		dap.setPasswordEncoder(bCryptPasswordEncoder());
-		auth.authenticationProvider(dap);*/
-		
-		auth.authenticationProvider(authProvider);
-		
+		auth.authenticationProvider(customAuthenticationProvider);
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 	
@@ -60,6 +54,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 public CustomBasicAuthenticationEntryPoint getAuthenticationEntryPoint() {
 	  return new CustomBasicAuthenticationEntryPoint();
 	 }
-	
+
 }
 

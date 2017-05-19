@@ -20,15 +20,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDao.findByUsername(username);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		for(Role role : user.getRoles()){
+		for (Role role : user.getRoles()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getDescription()));
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				grantedAuthorities);
 	}
 
 }

@@ -1,9 +1,11 @@
 package com.aleksandra.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +30,13 @@ public class UserController {
 		return userService.getUsers();
 	}
 
-	@PostMapping("/users")
+	@PostMapping("/register")
 	public List<ErrorResource> saveUser(@RequestBody @Validated User user, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return ErrorResource.createErrors(bindingResult);
 		}
 		userService.save(user);
-		// securityService.autologin(user.getUsername(),
-		// user.getPasswordConfirm());
-		return null;
+		return new ArrayList<>();
 	}
 
 	@PostMapping("/checkUsername")
@@ -49,24 +49,9 @@ public class UserController {
 		return (userService.findByEmail(email) == null ? false : true);
 	}
 
-	@PostMapping("/authenticate")
-	public void loginUser(UsernamePasswordAuthenticationToken token) {
-		System.out.println("post here");
-	}
-
-	@GetMapping("/authenticate")
-	public void getloginUser(UsernamePasswordAuthenticationToken token) {
-		System.out.println("get here");
-	}
-
 	@GetMapping("/login")
 	public void loginForm(UsernamePasswordAuthenticationToken token) {
 		System.out.println("login");
-	}
-
-	@PostMapping("/login")
-	public void postloginForm(UsernamePasswordAuthenticationToken token) {
-		System.out.println("post login");
 	}
 
 	@GetMapping("/welcome")
