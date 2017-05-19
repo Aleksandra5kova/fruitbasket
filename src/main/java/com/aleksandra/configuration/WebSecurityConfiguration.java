@@ -18,6 +18,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	@Autowired
+    private CustomAuthenticationProvider authProvider;
+	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
 		return new BCryptPasswordEncoder();
@@ -28,37 +31,28 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/**").permitAll()
-				.antMatchers("/users").permitAll()
+				.antMatchers("/users", "/checkUsername", "/checkEmail").permitAll()
 			.anyRequest().authenticated()
-			
-			/*	.antMatchers("/authenticate").permitAll()
-			.anyRequest().authenticated()*/
-			
 				.and()
-				
-				
-			/*.formLogin().permitAll()
-				.and()*/
-				
-			/*.logout()
-				.permitAll()
-				.and()*/
-		    .httpBasic().authenticationEntryPoint(getAuthenticationEntryPoint())
-		    	.and()
-		    	
+			.formLogin().loginPage("/authenticate").permitAll()
+				.and()
+			.httpBasic().authenticationEntryPoint(getAuthenticationEntryPoint())
+				.and()
 		    .authorizeRequests()
-		    	.antMatchers("/**").permitAll()
-		    
-		    .anyRequest().fullyAuthenticated()
-		    
+		    	.antMatchers("/api/**").permitAll()	
 		    	.and()
-		    	
 		    .csrf().disable();
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		/*DaoAuthenticationProvider dap = new DaoAuthenticationProvider();
+		dap.setUserDetailsService(userDetailsService);
+		dap.setPasswordEncoder(bCryptPasswordEncoder());
+		auth.authenticationProvider(dap);*/
+		
+		auth.authenticationProvider(authProvider);
+		
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 	
@@ -68,3 +62,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 }
 	
 }
+

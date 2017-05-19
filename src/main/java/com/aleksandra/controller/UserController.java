@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,22 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aleksandra.model.User;
-import com.aleksandra.service.SecurityService;
 import com.aleksandra.service.UserService;
 import com.aleksandra.validator.ErrorResource;
-import com.aleksandra.validator.UserValidator;
 
 @RestController
 public class UserController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private SecurityService securityService;
-
-	@Autowired
-	private UserValidator userValidator;
 
 	@GetMapping("/users")
 	@ResponseBody
@@ -43,6 +34,8 @@ public class UserController {
 			return ErrorResource.createErrors(bindingResult);
 		}
 		userService.save(user);
+		// securityService.autologin(user.getUsername(),
+		// user.getPasswordConfirm());
 		return null;
 	}
 
@@ -58,42 +51,27 @@ public class UserController {
 
 	@PostMapping("/authenticate")
 	public void loginUser(UsernamePasswordAuthenticationToken token) {
-		System.out.println("here");
-		//securityService.autologin(user.getUsername(), user.getPassword());
+		System.out.println("post here");
 	}
 
-	/*************************************************************************************************************/
-
-	/*@GetMapping("/registration")
-	public String registrationForm(Model model) {
-		model.addAttribute("user", new User());
-		return "registration";
-	}
-
-	@PostMapping("/registration")
-	public String createNewUser(@ModelAttribute User user, BindingResult bindingResult) {
-
-		userValidator.validate(user, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			return "registration";
-		}
-
-		userService.save(user);
-
-		securityService.autologin(user.getUsername(), user.getPasswordConfirm());
-
-		return "redirect:/welcome";
+	@GetMapping("/authenticate")
+	public void getloginUser(UsernamePasswordAuthenticationToken token) {
+		System.out.println("get here");
 	}
 
 	@GetMapping("/login")
-	public String loginForm() {
-		return "login";
+	public void loginForm(UsernamePasswordAuthenticationToken token) {
+		System.out.println("login");
+	}
+
+	@PostMapping("/login")
+	public void postloginForm(UsernamePasswordAuthenticationToken token) {
+		System.out.println("post login");
 	}
 
 	@GetMapping("/welcome")
-	public String welcome() {
-		return "welcome";
+	public void welcome() {
+		System.out.println("welcome");
 	}
-*/
+
 }
