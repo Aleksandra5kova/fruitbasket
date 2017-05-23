@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "orders")
 public class Orders {
@@ -27,16 +29,20 @@ public class Orders {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "order_issue_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date issueDate;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "order_payment_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date paymentDate;
 
 	@Column(name = "order_has_delivey")
 	private String hasDelivey;
 
 	@Column(name = "order_delivery_date")
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private Date deliveryDate;
 
 	@ManyToOne

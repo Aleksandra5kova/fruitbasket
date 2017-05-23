@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,10 +21,14 @@ public class OrderDaoImpl implements OrderDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Orders> getOrders() {
-		Criteria cr = sessionFactory.getCurrentSession().createCriteria(Orders.class);
-		List<Orders> orders = cr.list();
-		return orders;
+	public List<Orders> getOrders(String username) {
+		return sessionFactory.getCurrentSession().createCriteria(Orders.class).createAlias("user", "user")
+				.add(Restrictions.eq("user.username", username)).list();
+	}
+
+	@Override
+	public void saveOrder(Orders order) {
+		sessionFactory.getCurrentSession().persist(order);
 	}
 
 }
