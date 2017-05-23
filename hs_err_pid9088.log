@@ -1,0 +1,138 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000000005b6910ce, pid=9088, tid=0x0000000000001e48
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_121-b13) (build 1.8.0_121-b13)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.121-b13 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# C  [jdwp.dll+0x210ce]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000017db2000):  JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=7752, stack(0x0000000019920000,0x0000000019a20000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000000000000
+
+Registers:
+RAX=0x000000005b69f5a0, RBX=0x0000000017db2000, RCX=0x0000000000000000, RDX=0x0000000017d90480
+RSP=0x0000000019a1faf0, RBP=0x0000000019a1fbc0, RSI=0x0000000017d90480, RDI=0x0000000021d15270
+R8 =0x0000000019a1f878, R9 =0x00000000014824c0, R10=0x0000000000000000, R11=0x0000000019a1faa0
+R12=0x000000005b6991d8, R13=0x0000000017db2f68, R14=0x0000000000000000, R15=0x0000000000000000
+RIP=0x000000005b6910ce, EFLAGS=0x0000000000010206
+
+Top of Stack: (sp=0x0000000019a1faf0)
+0x0000000019a1faf0:   0000000019a1fba0 0000000019a1fbc0
+0x0000000019a1fb00:   0000000000000004 000000005a6c7295
+0x0000000019a1fb10:   0000000021d15270 000000005b68fad1
+0x0000000019a1fb20:   0000000019a1fba0 000000000000003e
+0x0000000019a1fb30:   0000000017db2b80 000000005a4b887d
+0x0000000019a1fb40:   0000000021d15270 000000005b67ee9b
+0x0000000019a1fb50:   0000000017db2000 0000000017db2b80
+0x0000000019a1fb60:   0000000017db2b80 000000005a6630d3
+0x0000000019a1fb70:   0000000017db2001 0000000003158b30
+0x0000000019a1fb80:   0000000017db2000 0000000017d9b0d0
+0x0000000019a1fb90:   0000000017d9c930 000000005a59cc1b
+0x0000000019a1fba0:   0000942600000000 0000000017020100
+0x0000000019a1fbb0:   0000000023457550 0000000017db2000
+0x0000000019a1fbc0:   00000000000003d8 000000005a66d548
+0x0000000019a1fbd0:   0000000017db2000 0000000017d9c930
+0x0000000019a1fbe0:   0000000017db2b90 00000000000000d8 
+
+Instructions: (pc=0x000000005b6910ce)
+0x000000005b6910ae:   8b c8 e8 cb bb ff ff 84 c0 75 08 48 8b cb e8 53
+0x000000005b6910be:   c6 ff ff 48 8b 05 20 ec 00 00 48 8b d6 48 8b 08
+0x000000005b6910ce:   48 8b 01 ff 90 00 01 00 00 8b c8 e8 62 ff ff ff
+0x000000005b6910de:   8b f8 83 f8 34 74 bb 85 c0 74 61 8b c8 e8 c0 e2 
+
+
+Register to memory mapping:
+
+RAX=0x000000005b69f5a0 is an unknown value
+RBX=0x0000000017db2000 is a thread
+RCX=0x0000000000000000 is an unknown value
+RDX=0x0000000017d90480 is an unknown value
+RSP=0x0000000019a1faf0 is pointing into the stack for thread: 0x0000000017db2000
+RBP=0x0000000019a1fbc0 is pointing into the stack for thread: 0x0000000017db2000
+RSI=0x0000000017d90480 is an unknown value
+RDI=0x0000000021d15270 is an unknown value
+R8 =0x0000000019a1f878 is pointing into the stack for thread: 0x0000000017db2000
+R9 =0x00000000014824c0 is an unknown value
+R10=0x0000000000000000 is an unknown value
+R11=0x0000000019a1faa0 is pointing into the stack for thread: 0x0000000017db2000
+R12=0x000000005b6991d8 is an unknown value
+R13=0x0000000017db2f68 is an unknown value
+R14=0x0000000000000000 is an unknown value
+R15=0x0000000000000000 is an unknown value
+
+
+Stack: [0x0000000019920000,0x0000000019a20000],  sp=0x0000000019a1faf0,  free space=1022k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [jdwp.dll+0x210ce]
+C  [jdwp.dll+0xee9b]
+V  [jvm.dll+0x1bd548]
+V  [jvm.dll+0x244e1f]
+V  [jvm.dll+0x29c69a]
+C  [msvcr100.dll+0x21d9f]
+C  [msvcr100.dll+0x21e3b]
+C  [KERNEL32.DLL+0x8364]
+C  [ntdll.dll+0x670d1]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000001f736000 JavaThread "Thread-0" [_thread_blocked, id=6980, stack(0x00000000250b0000,0x00000000251b0000)]
+  0x000000001f730000 JavaThread "Abandoned connection cleanup thread" daemon [_thread_blocked, id=6380, stack(0x0000000024bb0000,0x0000000024cb0000)]
+  0x0000000019d66800 JavaThread "Service Thread" daemon [_thread_blocked, id=10044, stack(0x000000001a120000,0x000000001a220000)]
+  0x0000000017dbd000 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=11604, stack(0x0000000019c20000,0x0000000019d20000)]
+  0x0000000017dba000 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=5064, stack(0x0000000019b20000,0x0000000019c20000)]
+  0x0000000017db4000 JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=12160, stack(0x0000000019a20000,0x0000000019b20000)]
+=>0x0000000017db2000 JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=7752, stack(0x0000000019920000,0x0000000019a20000)]
+  0x0000000017da4800 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=12064, stack(0x0000000019820000,0x0000000019920000)]
+  0x0000000017d97000 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_in_vm, id=10672, stack(0x0000000019720000,0x0000000019820000)]
+  0x0000000017d8d000 JavaThread "Attach Listener" daemon [_thread_blocked, id=936, stack(0x00000000192e0000,0x00000000193e0000)]
+  0x000000000335d800 JavaThread "Finalizer" daemon [_thread_blocked, id=9896, stack(0x0000000018ff0000,0x00000000190f0000)]
+  0x0000000003352000 JavaThread "Reference Handler" daemon [_thread_blocked, id=12208, stack(0x0000000018ef0000,0x0000000018ff0000)]
+  0x0000000003262800 JavaThread "main" [_thread_blocked, id=5216, stack(0x0000000003160000,0x0000000003260000)]
+
+Other Threads:
+  0x0000000017d57000 VMThread [stack: 0x0000000018df0000,0x0000000018ef0000] [id=10700]
+
+VM state:synchronizing (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000000000315d510] Threads_lock - owner thread: 0x0000000017d57000
+
+Heap:
+ PSYoungGen      total 318464K, used 11338K [0x00000000d6780000, 0x00000000eb380000, 0x0000000100000000)
+  eden space 297984K, 3% used [0x00000000d6780000,0x00000000d7292918,0x00000000e8a80000)
+  from space 20480K, 0% used [0x00000000e9f80000,0x00000000e9f80000,0x00000000eb380000)
+  to   space 20992K, 0% used [0x00000000e8a80000,0x00000000e8a80000,0x00000000e9f00000)
+ ParOldGen       total 168960K, used 40563K [0x0000000083600000, 0x000000008db00000, 0x00000000d6780000)
+  object space 168960K, 24% used [0x0000000083600000,0x0000000085d9cc20,0x000000008db00000)
+ Metaspace       used 61380K, capacity 62246K, committed 62552K, reserved 1103872K
+  class space    used 7717K, capacity 7962K, committed 8064K, reserved 1048576K
+
+Card table byte_map: [0x0000000012720000,0x0000000012b10000] byte_map_base: 0x0000000012305000
+
+Marking Bits: (ParMarkBitMap*) 0x000000005accb6d0
+ Begin Bits: [0x00000000131b0000, 0x00000000150d8000)
+ End Bits:   [0x00000000150d8000, 0x0000000017000000)
+
+Polling page: 0x0000000001400000
+
+CodeCache: size=245760Kb used=25196Kb max_used=25754Kb free=220563Kb
+ bounds [0x0000000003360000, 0x0000000004ca0000, 0x0000000012360000]
+ total_blobs=7133 nmethods=6370 adapters=683
+ compilation: enabled
+
+Compilation events (10 events):

@@ -31,10 +31,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.antMatchers("/register", "/checkUsername", "/checkEmail").permitAll()
+				.antMatchers("/register", "/checkUsername", "/checkEmail", "/isLoggedIn", "/authenticate").permitAll()
 			.anyRequest().authenticated()
 				.and()
-			.formLogin().loginPage("/login").permitAll()
+			.formLogin().loginPage("/authenticate").permitAll()
 				.and()
 			.httpBasic().authenticationEntryPoint(getAuthenticationEntryPoint())
 				.and()
