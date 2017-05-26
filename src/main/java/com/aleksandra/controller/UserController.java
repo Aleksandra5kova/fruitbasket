@@ -55,6 +55,8 @@ public class UserController {
 		return (securityService.findLoggedInUsername() == null ? false : true);
 	}
 	
+	
+	
 	@PostMapping("/authenticate")
 	public void postloginForm(UsernamePasswordAuthenticationToken token) {
 		System.out.println("post login");

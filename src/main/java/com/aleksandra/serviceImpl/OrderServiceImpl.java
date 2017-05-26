@@ -13,7 +13,7 @@ import com.aleksandra.service.OrderService;
 import com.aleksandra.service.SecurityService;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderDao orderDao;
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public void saveOrder(Orders order) {
+	public Orders saveOrder(Orders order) {
 		
 		String username = securityService.findLoggedInUsername();
 		order.setUser(userDao.findByUsername(username));
@@ -42,7 +42,12 @@ public class OrderServiceImpl implements OrderService{
 			order.setHasDelivey(Delivery.NO.getDelivery());
 		}
 		
-		orderDao.saveOrder(order);
+		return orderDao.saveOrder(order);
+	}
+
+	@Override
+	public void deleteOrder(Long id) {
+		orderDao.deleteOrder(id);
 	}
 
 }

@@ -8,6 +8,10 @@ public interface OrderDao {
 
 	public List<Orders> getOrders(String username);
 	
-	public void saveOrder(Orders order);
+	public Orders saveOrder(Orders order);
+	
+	public Orders findById(Long id);
 
+	public void deleteOrder(Long id);
+	
 }

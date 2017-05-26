@@ -8,6 +8,8 @@ public interface OrderService {
 	
 	public List<Orders> getOrders();
 	
-	public void saveOrder(Orders order);
+	public Orders saveOrder(Orders order);
+	
+	public void deleteOrder(Long id);
 
 }
