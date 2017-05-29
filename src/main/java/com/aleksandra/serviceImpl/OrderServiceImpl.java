@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.aleksandra.dao.OrderDao;
 import com.aleksandra.dao.UserDao;
-import com.aleksandra.model.Delivery;
 import com.aleksandra.model.Orders;
 import com.aleksandra.service.OrderService;
 import com.aleksandra.service.SecurityService;
@@ -35,13 +34,6 @@ public class OrderServiceImpl implements OrderService {
 		
 		String username = securityService.findLoggedInUsername();
 		order.setUser(userDao.findByUsername(username));
-		
-		if(order.getHasDelivey().equals("true")){
-			order.setHasDelivey(Delivery.YES.getDelivery());
-		} else {
-			order.setHasDelivey(Delivery.NO.getDelivery());
-		}
-		
 		return orderDao.saveOrder(order);
 	}
 
