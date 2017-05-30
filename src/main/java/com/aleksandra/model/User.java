@@ -54,6 +54,9 @@ public class User {
 
 	@Column(name = "user_phone")
 	private String phone;
+	
+	@Column(name = "user_language")
+	private String language;
 
 	@ManyToOne
 	@JoinColumn(name = "company_id")
@@ -69,7 +72,7 @@ public class User {
 	}
 
 	public User(String username, String password, String firstname, String lastname, String genderType,
-			Date dateOfBirth, String address, String email, String phone) {
+			Date dateOfBirth, String address, String email, String phone, String language) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -80,6 +83,7 @@ public class User {
 		this.address = address;
 		this.email = email;
 		this.phone = phone;
+		this.language = language;
 	}
 
 	public Long getId() {
@@ -161,6 +165,14 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	public String getLanguage() {
+		return language;
+	}
+	
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
 	public Company getCompany() {
 		return company;
@@ -182,7 +194,7 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
 				+ ", lastname=" + lastname + ", genderType=" + genderType + ", dateOfBirth=" + dateOfBirth
-				+ ", address=" + address + ", email=" + email + ", phone=" + phone + "]";
+				+ ", address=" + address + ", email=" + email + ", phone=" + phone + ", language=" + language + "]";
 	}
 
 }

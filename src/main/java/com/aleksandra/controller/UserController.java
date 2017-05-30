@@ -55,6 +55,12 @@ public class UserController {
 		return (securityService.findLoggedInUsername() == null ? false : true);
 	}
 	
+	@GetMapping("/currentUser")
+	public User getCurrentUser(){
+		System.out.println(userService.getCurrentUser());
+		return userService.getCurrentUser();
+	}
+	
 	
 	
 	@PostMapping("/authenticate")

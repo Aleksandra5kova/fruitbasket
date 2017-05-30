@@ -25,26 +25,26 @@ public class UserValidator implements Validator {
 
 		User user = (User) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty", "Email is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty", "Username is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "Password is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "emailRequiered", "emailRequiered");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "usernameRequiered", "usernameRequiered");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "passwordRequiered", "passwordRequiered");
 
 		if (user.getUsername() != null && user.getPassword() != null && user.getEmail() != null) {
 
 			if (userService.findByEmail(user.getEmail()) != null) {
-				errors.rejectValue("email", "DuplicateEmail", "Email must be unique.");
+				errors.rejectValue("email", "emailExist", "emailExist");
 			}
 
 			if (userService.findByUsername(user.getUsername()) != null) {
-				errors.rejectValue("username", "DuplicateUsername", "Username must be unique.");
+				errors.rejectValue("username", "usernameExist", "usernameExist");
 			}
 
 			if (user.getUsername().length() < 6 && user.getUsername().length() > 32) {
-				errors.rejectValue("username", "SizeUusername", "Username must be between 6-32 characters long.");
+				errors.rejectValue("username", "usernameSize", "usernameSize");
 			}
 
 			if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-				errors.rejectValue("password", "SizePassword", "Password must be between 8-32 characters long.");
+				errors.rejectValue("password", "passwordSize", "passwordSize");
 			}
 
 		}

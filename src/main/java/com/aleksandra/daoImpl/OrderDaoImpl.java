@@ -28,21 +28,18 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Orders saveOrder(Orders order) {
-		//special case
 		sessionFactory.getCurrentSession().saveOrUpdate(order);
-		order = findById(order.getId());
 		return order;
 	}
 
 	@Override
 	public Orders findById(Long id) {
 		return (Orders) sessionFactory.getCurrentSession().createCriteria(Orders.class).add(Restrictions.eq("id", id))
-				.list().get(0);
+				.uniqueResult();
 	}
 
 	@Override
-	public void deleteOrder(Long id) {
-		Orders order = findById(id);
+	public void deleteOrder(Orders order) {
 		sessionFactory.getCurrentSession().delete(order);
 	}
 

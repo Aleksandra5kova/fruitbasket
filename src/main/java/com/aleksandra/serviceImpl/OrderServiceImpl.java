@@ -31,7 +31,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Orders saveOrder(Orders order) {
-		
 		String username = securityService.findLoggedInUsername();
 		order.setUser(userDao.findByUsername(username));
 		return orderDao.saveOrder(order);
@@ -39,7 +38,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void deleteOrder(Long id) {
-		orderDao.deleteOrder(id);
+		Orders order = orderDao.findById(id);
+		orderDao.deleteOrder(order);
 	}
 
 }

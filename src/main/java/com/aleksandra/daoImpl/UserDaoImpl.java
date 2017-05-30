@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,17 +20,12 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public User findByUsername(String username) {
-		User user = null;
 		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
 		cr.add(Restrictions.eq("username", username));
-		List<User> users = cr.list();
-		if (users.size() != 0) {
-			user = users.get(0);
-		}
-		return user;
+		// cr.setmaxResult(1);
+		return (User) cr.uniqueResult();
 	}
 
 	@Override
@@ -43,17 +39,17 @@ public class UserDaoImpl implements UserDao {
 		return sessionFactory.getCurrentSession().createCriteria(User.class).list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public User findByEmail(String email) {
-		User user = null;
 		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
 		cr.add(Restrictions.eq("email", email));
-		List<User> users = cr.list();
-		if (users.size() != 0) {
-			user = users.get(0);
-		}
-		return user;
+		return (User) cr.uniqueResult();
+	}
+
+	@Override
+	public User getCurrentUser(String username) {
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("username", username)).uniqueResult();
 	}
 
 }

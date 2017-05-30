@@ -14,4 +14,6 @@ public interface UserDao {
 
 	public List<User> getUsers();
 	
+	public User getCurrentUser(String username);
+	
 }

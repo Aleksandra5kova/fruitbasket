@@ -12,6 +12,6 @@ public interface OrderDao {
 	
 	public Orders findById(Long id);
 
-	public void deleteOrder(Long id);
+	public void deleteOrder(Orders order);
 	
 }

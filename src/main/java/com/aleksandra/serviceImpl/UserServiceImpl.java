@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.aleksandra.dao.RoleDao;
 import com.aleksandra.dao.UserDao;
 import com.aleksandra.model.User;
+import com.aleksandra.service.SecurityService;
 import com.aleksandra.service.UserService;
 
 @Service
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private SecurityService securityService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -44,6 +48,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByEmail(String email) {
 		return userDao.findByEmail(email);
+	}
+
+	@Override
+	public User getCurrentUser() {
+		String loggedInUsername = securityService.findLoggedInUsername();
+		return userDao.getCurrentUser(loggedInUsername);
 	}
 
 }
