@@ -52,6 +52,7 @@ public class UserController {
 	
 	@GetMapping("/isLoggedIn")
 	public boolean isLoggedIn(){
+		System.out.println(securityService.findLoggedInUsername());
 		return (securityService.findLoggedInUsername() == null ? false : true);
 	}
 	
@@ -60,8 +61,6 @@ public class UserController {
 		System.out.println(userService.getCurrentUser());
 		return userService.getCurrentUser();
 	}
-	
-	
 	
 	@PostMapping("/authenticate")
 	public void postloginForm(UsernamePasswordAuthenticationToken token) {

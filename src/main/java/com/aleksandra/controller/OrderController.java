@@ -31,8 +31,8 @@ public class OrderController {
 	}
 	
 	@RequestMapping (value = "/orders/{id}", method = RequestMethod.DELETE)
-	public void deleteOrder(@PathVariable ("id") String id){
-		orderService.deleteOrder(Long.valueOf(id));
+	public void deleteOrder(@PathVariable ("id") Long id){
+		orderService.deleteOrder(id);
 	}
 	
 }

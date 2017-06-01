@@ -2,6 +2,8 @@ package com.aleksandra.serviceImpl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +39,11 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteOrder(Long id) {
 		Orders order = orderDao.findById(id);
 		orderDao.deleteOrder(order);
+		
 	}
 
 }

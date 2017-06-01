@@ -254,6 +254,22 @@ public class Food {
 		this.foodType = foodType;
 	}
 
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
 		return "Food [id=" + id + ", name=" + name + ", calories=" + calories + ", totalFat=" + totalFat

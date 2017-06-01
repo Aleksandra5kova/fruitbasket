@@ -29,6 +29,7 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public Orders saveOrder(Orders order) {
 		sessionFactory.getCurrentSession().saveOrUpdate(order);
+		int i =1/0;
 		return order;
 	}
 
@@ -39,8 +40,11 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
+	//@Transactional(rollbackOn = Exception.class)
 	public void deleteOrder(Orders order) {
-		sessionFactory.getCurrentSession().delete(order);
+		Object managed = sessionFactory.getCurrentSession().merge(order);
+		sessionFactory.getCurrentSession().delete(managed);
+		int i =1/0;
 	}
 
 }
