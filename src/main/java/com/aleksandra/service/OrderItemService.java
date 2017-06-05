@@ -10,4 +10,8 @@ public interface OrderItemService {
 	
 	public OrderItem saveOrderItem(OrderItem orderItem);
 
+	public double totalPrice(Long id);
+	
+	public void deleteOrderItem(Long id);
+
 }

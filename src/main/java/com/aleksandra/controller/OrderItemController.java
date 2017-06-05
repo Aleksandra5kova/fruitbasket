@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,14 +22,25 @@ public class OrderItemController {
 	private OrderItemService orderItemService;
 	
 	@GetMapping("orderItems/order")
-	public List<OrderItem> getOrderItemsByOrder(@RequestParam("id") String id){
-		List<OrderItem> orderItems =orderItemService.getOrderItemsByOrder(Long.valueOf(id)); 
+	public List<OrderItem> getOrderItemsByOrder(@RequestParam("id") Long id){
+		List<OrderItem> orderItems =orderItemService.getOrderItemsByOrder(id); 
 		return orderItems;
 	}
 
 	@PostMapping("/orderItems")
 	public OrderItem saveOrderItem(@RequestBody OrderItem orderItem){
-		//return new OrderItem();
+		
 		return orderItemService.saveOrderItem(orderItem);
+	}
+	
+	@GetMapping("orderItems/totalPrice")
+	public double totalPrice(@RequestParam("id") Long id){
+		double price = orderItemService.totalPrice(id);
+		return price;
+	}
+	
+	@RequestMapping (value = "/orderItems/{id}", method = RequestMethod.DELETE)
+	public void deleteOrder(@PathVariable ("id") Long id){
+		orderItemService.deleteOrderItem(id);
 	}
 }

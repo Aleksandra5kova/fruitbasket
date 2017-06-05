@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import com.aleksandra.dao.FoodDao;
 import com.aleksandra.dao.OrderDao;
 import com.aleksandra.dao.OrderItemDao;
-import com.aleksandra.model.Food;
-import com.aleksandra.model.FoodType;
 import com.aleksandra.model.OrderItem;
 import com.aleksandra.model.Orders;
 import com.aleksandra.service.OrderItemService;
@@ -34,7 +32,19 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Override
 	public OrderItem saveOrderItem(OrderItem orderItem) {
+		
 		return orderItemDao.saveOrderItem(orderItem);
+	}
+
+	@Override
+	public double totalPrice(Long id) {
+		return orderItemDao.totalPrice(id);
+	}
+
+	@Override
+	public void deleteOrderItem(Long id) {
+		OrderItem orderItem = orderItemDao.findById(id);
+		orderItemDao.deleteOrderItem(orderItem);
 	}
 
 }

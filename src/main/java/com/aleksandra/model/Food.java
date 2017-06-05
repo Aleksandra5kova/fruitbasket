@@ -19,11 +19,8 @@ public class Food {
 	@Column(name = "food_id")
 	private Long id;
 	
-	@Column(name = "food_name")
+	@Column(name = "food_name", unique = true)
 	private String name;
-	
-	@Transient
-	private static final String amountPer = "100g";
 	
 	@Column(name = "food_unit")
 	private String unit;
@@ -236,14 +233,6 @@ public class Food {
 
 	public Double getVitaminD() {
 		return vitaminD;
-	}
-
-	public void setVitaminD(Double vitaminD) {
-		this.vitaminD = vitaminD;
-	}
-
-	public static String getAmountper() {
-		return amountPer;
 	}
 
 	public FoodType getFoodType() {

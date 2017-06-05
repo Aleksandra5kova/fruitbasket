@@ -17,8 +17,8 @@ public class FoodController {
 	private FoodService foodService;
 	
 	@GetMapping("/foods/foodtype")
-	public List<Food> getFoodsByFoodType(@RequestParam("id") String id){
-		List<Food> foods = foodService.getFoodsByFoodType(Long.valueOf(id));
+	public List<Food> getFoodsByFoodType(@RequestParam("id") Long id){
+		List<Food> foods = foodService.getFoodsByFoodType(id);
 		return foods;
 	}
 	

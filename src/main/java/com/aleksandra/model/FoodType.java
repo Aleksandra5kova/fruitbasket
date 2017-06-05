@@ -16,7 +16,7 @@ public class FoodType {
 	@Column(name = "food_id")
 	private Long id;
 
-	@Column(name = "food_name")
+	@Column(name = "food_name", unique = true)
 	private String name;
 
 	public FoodType() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,40 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
 	@Override
 	public OrderItem saveOrderItem(OrderItem orderItem) {
-		sessionFactory.getCurrentSession().saveOrUpdate(orderItem);
-		return orderItem;
+		return (OrderItem) sessionFactory.getCurrentSession().merge(orderItem);
+	}
+
+	@Override
+	public void deleteOrderItemsByOrder(Long id) {
+		Query query = sessionFactory.getCurrentSession().createQuery("delete OrderItem where order.id = :id");
+		query.setParameter("id", id);
+		query.executeUpdate();
+	}
+
+	@Override
+	public double totalPrice(Long id) {
+//		return (double) sessionFactory.getCurrentSession().createCriteria(OrderItem.class)
+//				//.createAlias("food", "food")
+//				.add(Restrictions.eq("order.id", id))
+//				.setProjection(Projections.sqlProjection("sum(quantity) AS total",
+//						new String[] { "total" }, new Type[] { DoubleType.INSTANCE }))
+//				.uniqueResult();
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("select sum(quantity * food.price) from OrderItem oi where order.id = :id");
+		query.setParameter("id", id);
+		return (double) query.uniqueResult();
+	}
+
+	@Override
+	public void deleteOrderItem(OrderItem orderItem) {
+		OrderItem managed = (OrderItem) sessionFactory.getCurrentSession().merge(orderItem);
+		sessionFactory.getCurrentSession().delete(managed);
+	}
+
+	@Override
+	public OrderItem findById(Long id) {
+		return (OrderItem) sessionFactory.getCurrentSession().createCriteria(OrderItem.class).add(Restrictions.eq("id", id))
+				.uniqueResult();
 	}
 
 }

@@ -11,4 +11,12 @@ public interface OrderItemDao {
 	
 	public OrderItem saveOrderItem(OrderItem orderItem);
 	
+	public void deleteOrderItemsByOrder(Long id);
+	
+	public double totalPrice(Long id);
+	
+	public void deleteOrderItem(OrderItem orderItem);
+	
+	public OrderItem findById(Long id);
+	
 }
