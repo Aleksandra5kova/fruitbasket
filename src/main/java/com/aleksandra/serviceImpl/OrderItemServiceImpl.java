@@ -32,7 +32,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Override
 	public OrderItem saveOrderItem(OrderItem orderItem) {
-		
 		return orderItemDao.saveOrderItem(orderItem);
 	}
 

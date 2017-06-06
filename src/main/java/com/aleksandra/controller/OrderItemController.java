@@ -29,7 +29,6 @@ public class OrderItemController {
 
 	@PostMapping("/orderItems")
 	public OrderItem saveOrderItem(@RequestBody OrderItem orderItem){
-		
 		return orderItemService.saveOrderItem(orderItem);
 	}
 	

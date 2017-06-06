@@ -43,7 +43,7 @@ public class Orders {
 	@Column(name = "order_delivery_date")
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a")
 	private Date deliveryDate;
 
 	@ManyToOne
