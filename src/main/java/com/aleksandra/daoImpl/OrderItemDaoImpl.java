@@ -42,16 +42,10 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
 	@Override
 	public double totalPrice(Long id) {
-//		return (double) sessionFactory.getCurrentSession().createCriteria(OrderItem.class)
-//				//.createAlias("food", "food")
-//				.add(Restrictions.eq("order.id", id))
-//				.setProjection(Projections.sqlProjection("sum(quantity) AS total",
-//						new String[] { "total" }, new Type[] { DoubleType.INSTANCE }))
-//				.uniqueResult();
-		
-		Query query = sessionFactory.getCurrentSession().createQuery("select sum(quantity * food.price) from OrderItem oi where order.id = :id");
+		Query query = sessionFactory.getCurrentSession()
+				.createQuery("select sum(quantity * food.price) from OrderItem oi where order.id = :id");
 		query.setParameter("id", id);
-		return (double) query.uniqueResult();
+		return (double) (query.uniqueResult() == null ? 0d : query.uniqueResult());
 	}
 
 	@Override
@@ -62,8 +56,8 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
 	@Override
 	public OrderItem findById(Long id) {
-		return (OrderItem) sessionFactory.getCurrentSession().createCriteria(OrderItem.class).add(Restrictions.eq("id", id))
-				.uniqueResult();
+		return (OrderItem) sessionFactory.getCurrentSession().createCriteria(OrderItem.class)
+				.add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
 }

@@ -1,9 +1,11 @@
 package com.aleksandra.serviceImpl;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.transaction.Transactional;
 
@@ -42,14 +44,6 @@ public class OrderServiceImpl implements OrderService {
 	public Orders saveOrder(Orders order) {
 		String username = securityService.findLoggedInUsername();
 		order.setUser(userDao.findByUsername(username));
-		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm a");
-		try {
-			if (order.getDeliveryDate() != null) {
-				order.setDeliveryDate(dt.parse(order.getDeliveryDate().toString()));
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		return orderDao.saveOrder(order);
 	}
 

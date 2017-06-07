@@ -38,13 +38,17 @@ public class Orders {
 	private Date paymentDate;
 
 	@Column(name = "order_has_delivey")
-	private String hasDelivey;
+	private Integer hasDelivey;
 
 	@Column(name = "order_delivery_date")
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a")
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date deliveryDate;
+	
+	@Column(name = "order_delivery_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+	private Date deliveryTime;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -58,13 +62,15 @@ public class Orders {
 
 	}
 
-	public Orders(String orderNo, Date issueDate, Date paymentDate, String hasDelivey, Date deliveryDate) {
+	public Orders(String orderNo, Date issueDate, Date paymentDate, Integer hasDelivey, Date deliveryDate,
+			Date deliveryTime) {
 		super();
 		this.orderNo = orderNo;
 		this.issueDate = issueDate;
 		this.paymentDate = paymentDate;
 		this.hasDelivey = hasDelivey;
 		this.deliveryDate = deliveryDate;
+		this.deliveryTime = deliveryTime;
 	}
 
 	public Long getId() {
@@ -99,11 +105,11 @@ public class Orders {
 		this.paymentDate = paymentDate;
 	}
 
-	public String getHasDelivey() {
+	public Integer getHasDelivey() {
 		return hasDelivey;
 	}
-
-	public void setHasDelivey(String hasDelivey) {
+	
+	public void setHasDelivey(Integer hasDelivey) {
 		this.hasDelivey = hasDelivey;
 	}
 
@@ -113,6 +119,14 @@ public class Orders {
 
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
+	}
+	
+	public Date getDeliveryTime() {
+		return deliveryTime;
+	}
+	
+	public void setDeliveryTime(Date deliveryTime) {
+		this.deliveryTime = deliveryTime;
 	}
 
 	public User getUser() {
@@ -133,7 +147,9 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", orderNo=" + orderNo + ", issueDate=" + issueDate + ", paymentDate=" + paymentDate
-				+ ", hasDelivey=" + hasDelivey + ", deliveryDate=" + deliveryDate + "]";
+		return "Orders [id=" + id + ", orderNo=" + orderNo + ", issueDate=" + issueDate + ", paymentDate=" + paymentDate
+				+ ", hasDelivey=" + hasDelivey + ", deliveryDate=" + deliveryDate + ", deliveryTime=" + deliveryTime
+				+ "]";
 	}
+
 }
