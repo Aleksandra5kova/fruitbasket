@@ -35,16 +35,14 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
 	@Override
 	public void deleteOrderItemsByOrder(Long id) {
-		Query query = sessionFactory.getCurrentSession().createQuery("delete OrderItem where order.id = :id");
-		query.setParameter("id", id);
+		Query query = sessionFactory.getCurrentSession().getNamedQuery("OrderItem.deleteOrderItemsByOrder")
+				.setParameter("id", id);
 		query.executeUpdate();
 	}
 
 	@Override
 	public double totalPrice(Long id) {
-		Query query = sessionFactory.getCurrentSession()
-				.createQuery("select sum(quantity * food.price) from OrderItem oi where order.id = :id");
-		query.setParameter("id", id);
+		Query query = sessionFactory.getCurrentSession().getNamedQuery("OrderItem.totalPrice").setParameter("id", id);
 		return (double) (query.uniqueResult() == null ? 0d : query.uniqueResult());
 	}
 

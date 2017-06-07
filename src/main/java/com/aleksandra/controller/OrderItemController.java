@@ -23,8 +23,7 @@ public class OrderItemController {
 	
 	@GetMapping("orderItems/order")
 	public List<OrderItem> getOrderItemsByOrder(@RequestParam("id") Long id){
-		List<OrderItem> orderItems =orderItemService.getOrderItemsByOrder(id); 
-		return orderItems;
+		return orderItemService.getOrderItemsByOrder(id); 
 	}
 
 	@PostMapping("/orderItems")
@@ -34,8 +33,7 @@ public class OrderItemController {
 	
 	@GetMapping("orderItems/totalPrice")
 	public double totalPrice(@RequestParam("id") Long id){
-		double price = orderItemService.totalPrice(id);
-		return price;
+		return orderItemService.totalPrice(id);
 	}
 	
 	@RequestMapping (value = "/orderItems/{id}", method = RequestMethod.DELETE)

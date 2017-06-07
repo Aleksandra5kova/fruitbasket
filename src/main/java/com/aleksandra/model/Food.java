@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "food")
@@ -21,9 +20,6 @@ public class Food {
 	
 	@Column(name = "food_name", unique = true)
 	private String name;
-	
-	@Column(name = "food_unit")
-	private String unit;
 	
 	@Column(name = "food_price")
 	private Double price;
@@ -241,14 +237,6 @@ public class Food {
 	
 	public void setFoodType(FoodType foodType) {
 		this.foodType = foodType;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
 	}
 
 	public Double getPrice() {
