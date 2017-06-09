@@ -9,7 +9,6 @@ import com.aleksandra.dao.OrderDao;
 import com.aleksandra.dao.OrderItemDao;
 import com.aleksandra.model.OrderItem;
 import com.aleksandra.model.Orders;
-import com.aleksandra.model.UnitType;
 import com.aleksandra.service.OrderItemService;
 
 @Service
@@ -29,12 +28,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Override
 	public OrderItem saveOrderItem(OrderItem orderItem) {
-		String gram = UnitType.gram.getUnitType();
-		if(orderItem.getUnit().equals(gram)){
-			orderItem.setPrice(orderItem.getFood().getPrice()/1000);
-		} else {
-			orderItem.setPrice(orderItem.getFood().getPrice());
-		}
 		return orderItemDao.saveOrderItem(orderItem);
 	}
 
