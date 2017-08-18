@@ -1,6 +1,6 @@
 package com.aleksandra.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "role")
 public class Role {
@@ -18,15 +20,16 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
 	private Long id;
-	
+
 	@Column(name = "role_description")
 	private String description;
-	
+
 	@ManyToMany(mappedBy = "roles")
-	private Set<User> users;
-	
+	@JsonIgnore
+	private List<User> users;
+
 	public Role() {
-		
+
 	}
 
 	public Role(String description) {
@@ -49,18 +52,18 @@ public class Role {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public Set<User> getUsers() {
+
+	public List<User> getUsers() {
 		return users;
 	}
-	
-	public void setUsers(Set<User> users) {
+
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "UserRole [id=" + id + ", description=" + description + "]";
 	}
-	
+
 }

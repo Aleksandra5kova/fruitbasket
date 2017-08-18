@@ -26,10 +26,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		User user = userDao.findByUsername(username);
 		
-		/*if (user == null) {
-			throw new UsernameNotFoundException("Unknown User");
-		}*/
-
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for (Role role : user.getRoles()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getDescription()));

@@ -1,7 +1,7 @@
 package com.aleksandra.model;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,7 +54,7 @@ public class User {
 
 	@Column(name = "user_phone")
 	private String phone;
-	
+
 	@Column(name = "user_language")
 	private String language;
 
@@ -65,8 +65,7 @@ public class User {
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
-	@JsonIgnore
-	private Set<Role> roles;
+	private List<Role> roles;
 
 	public User() {
 	}
@@ -165,11 +164,11 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
 	public String getLanguage() {
 		return language;
 	}
-	
+
 	public void setLanguage(String language) {
 		this.language = language;
 	}
@@ -182,11 +181,11 @@ public class User {
 		this.company = company;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 

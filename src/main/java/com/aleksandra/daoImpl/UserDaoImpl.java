@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class UserDaoImpl implements UserDao {
 	public User findByUsername(String username) {
 		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
 		cr.add(Restrictions.eq("username", username));
+		//cr.setResultTransformer(Transformers.aliasToBean(User.class));
 		// cr.setmaxResult(1);
 		return (User) cr.uniqueResult();
 	}
@@ -47,8 +49,10 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getCurrentUser(String username) {
-		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
-				.add(Restrictions.eq("username", username)).uniqueResult();
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(User.class);
+		cr.add(Restrictions.eq("username", username));
+		User user = (User) cr.uniqueResult();
+		return user;
 	}
 
 }
